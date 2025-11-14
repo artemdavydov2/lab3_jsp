@@ -4,78 +4,100 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
+
 <h:head>
    <title>Метрики Проєктів</title>
 </h:head>
+
 <h:body>
-   <p:panel header="Додати новий проєкт">
+
+   <!-- Панель додавання / редагування проєкту -->
+   <p:panel header="Додати / редагувати проєкт">
       <h:form id="addProjectForm">
-
-         <p:messages id="messages" showDetail="true" closable="true">
-            <p:autoUpdate/>
-         </p:messages>
-
          <p:panelGrid columns="2" style="margin-bottom:10px">
             <p:outputLabel for="name" value="Назва проєкту:"/>
-            <p:inputText id="name" value="#{projectBean.newProject.projectName}" required="true" label="Назва проєкту"/>
-
+            <p:inputText id="name"
+                         value="#{projectBean.newProject.projectName}"
+                         required="true"
+                         label="Назва проєкту"/>
             <p:outputLabel for="url" value="URL проєкту:"/>
-            <p:inputText id="url" value="#{projectBean.newProject.projectUrl}"/>
-
+            <p:inputText id="url"
+                         value="#{projectBean.newProject.projectUrl}"/>
             <p:outputLabel for="budget" value="Бюджет:"/>
-            <p:inputNumber id="budget" value="#{projectBean.newProject.projectBudget}" symbol=" $" symbolPosition="s"
-                           decimalSeparator="." thousandSeparator=","/>
-
+            <p:inputNumber id="budget"
+                           value="#{projectBean.newProject.projectBudget}"
+                           symbol=" $"
+                           symbolPosition="s"
+                           decimalSeparator="."
+                           thousandSeparator=","/>
             <p:outputLabel for="releaseDate" value="Дата релізу:"/>
-            <p:calendar id="releaseDate" value="#{projectBean.newProject.releaseDate}" pattern="dd.MM.yyyy" mask="true"/>
+            <p:calendar id="releaseDate"
+                        value="#{projectBean.newProject.releaseDate}"
+                        pattern="dd.MM.yyyy"
+                        mask="true"/>
          </p:panelGrid>
-
-         <p:commandButton value="Зберегти" action="#{projectBean.save}" update="@form :projectsTableForm"/>
+         <!-- Зберігає новий або оновлений проєкт і оновлює таблицю -->
+         <p:commandButton value="Зберегти"
+                          action="#{projectBean.save}"
+                          update="@form :projectsTableForm"/>
       </h:form>
    </p:panel>
-
    <p:separator/>
-
+   <!-- Таблиця проєктів -->
    <h:form id="projectsTableForm">
-      <p:dataTable id="projectsTable" var="project" value="#{projectBean.projects}"
+      <p:dataTable id="projectsTable"
+                   var="project"
+                   value="#{projectBean.projects}"
                    emptyMessage="Не знайдено жодного проєкту">
          <p:column headerText="ID">
             <h:outputText value="#{project.id}"/>
          </p:column>
-
          <p:column headerText="Назва проєкту">
             <h:outputText value="#{project.projectName}"/>
          </p:column>
-
          <p:column headerText="URL">
             <h:outputText value="#{project.projectUrl}"/>
          </p:column>
-
          <p:column headerText="Бюджет">
             <h:outputText value="#{project.projectBudget}">
-               <f:convertNumber type="currency" currencySymbol="$" />
+               <f:convertNumber type="currency" currencySymbol="$"/>
             </h:outputText>
          </p:column>
-
          <p:column headerText="Дата релізу">
             <h:outputText value="#{project.releaseDate}">
                <f:convertDateTime type="localDate" pattern="dd.MM.yyyy"/>
             </h:outputText>
          </p:column>
-
-         <p:column headerText="Дії" style="width:100px; text-align: center">
-            <p:commandButton icon="pi pi-trash" action="#{projectBean.delete(project.id)}" update=":projectsTableForm"
-                             styleClass="ui-button-danger" title="Видалити">
-               <p:confirm header="Підтвердження" message="Ви впевнені, що хочете видалити цей проєкт?" icon="pi pi-exclamation-triangle"/>
+         <p:column headerText="Дії" style="width:120px; text-align:center">
+            <!-- Кнопка редагування, яка підставляє проєкт у верхню форму -->
+            <p:commandButton icon="pi pi-pencil"
+                             action="#{projectBean.edit(project)}"
+                             update=":addProjectForm"
+                             styleClass="ui-button-warning"
+                             title="Редагувати"/>
+            <!-- Кнопка видалення з підтвердженням -->
+            <p:commandButton icon="pi pi-trash"
+                             action="#{projectBean.delete(project.id)}"
+                             update=":projectsTableForm"
+                             styleClass="ui-button-danger"
+                             title="Видалити">
+               <p:confirm header="Підтвердження"
+                          message="Ви впевнені, що хочете видалити цей проєкт?"
+                          icon="pi pi-exclamation-triangle"/>
             </p:commandButton>
          </p:column>
       </p:dataTable>
-
+      <!-- Глобальне вікно підтвердження для видалення -->
       <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-         <p:commandButton value="Так" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
-         <p:commandButton value="Ні" type="button" styleClass="ui-confirmdialog-no ui-button-secondary" icon="pi pi-times" />
+         <p:commandButton value="Так"
+                          type="button"
+                          styleClass="ui-confirmdialog-yes"
+                          icon="pi pi-check"/>
+         <p:commandButton value="Ні"
+                          type="button"
+                          styleClass="ui-confirmdialog-no ui-button-secondary"
+                          icon="pi pi-times"/>
       </p:confirmDialog>
-
    </h:form>
 </h:body>
 </html>

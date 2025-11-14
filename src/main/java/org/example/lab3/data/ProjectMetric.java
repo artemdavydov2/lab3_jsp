@@ -11,7 +11,8 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "project_metrics")
-@NamedQuery(name = "ProjectMetric.findAll", query = "SELECT p FROM ProjectMetric p ORDER BY p.id ASC")
+@NamedQuery(name = "ProjectMetric.findAll",
+        query = "SELECT p FROM ProjectMetric p ORDER BY p.id ASC")
 public class ProjectMetric implements Serializable {
 
     @Id
@@ -34,18 +35,57 @@ public class ProjectMetric implements Serializable {
     @Column(name = "release_date_project")
     private LocalDate releaseDate;
 
-    // Getters and Setters
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
-    public String getProjectName() { return projectName; }
-    public void setProjectName(String projectName) { this.projectName = projectName; }
-    public String getProjectUrl() { return projectUrl; }
-    public void setProjectUrl(String projectUrl) { this.projectUrl = projectUrl; }
-    public BigDecimal getProjectBudget() { return projectBudget; }
-    public void setProjectBudget(BigDecimal projectBudget) { this.projectBudget = projectBudget; }
-    public LocalDate getReleaseDate() { return releaseDate; }
-    public void setReleaseDate(LocalDate releaseDate) { this.releaseDate = releaseDate; }
+    // Повертає ідентифікатор проєкту.
+    public Integer getId() {
+        return id;
+    }
 
+    // Встановлює ідентифікатор проєкту.
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    // Повертає назву проєкту.
+    public String getProjectName() {
+        return projectName;
+    }
+
+    // Встановлює назву проєкту.
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    // Повертає URL проєкту.
+    public String getProjectUrl() {
+        return projectUrl;
+    }
+
+    // Встановлює URL проєкту.
+    public void setProjectUrl(String projectUrl) {
+        this.projectUrl = projectUrl;
+    }
+
+    // Повертає бюджет проєкту.
+    public BigDecimal getProjectBudget() {
+        return projectBudget;
+    }
+
+    // Встановлює бюджет проєкту.
+    public void setProjectBudget(BigDecimal projectBudget) {
+        this.projectBudget = projectBudget;
+    }
+
+    // Повертає дату релізу проєкту.
+    public LocalDate getReleaseDate() {
+        return releaseDate;
+    }
+
+    // Встановлює дату релізу проєкту.
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    // Порівнює проєкти за їх ідентифікатором.
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -54,6 +94,7 @@ public class ProjectMetric implements Serializable {
         return Objects.equals(id, that.id);
     }
 
+    // Обчислює хеш-код проєкту на основі ідентифікатора.
     @Override
     public int hashCode() {
         return Objects.hash(id);
