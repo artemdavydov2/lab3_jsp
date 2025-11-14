@@ -35,7 +35,7 @@ public class ProjectBean implements Serializable {
         // Створюємо новий порожній об'єкт для форми
         newProject = new ProjectMetric();
 
-        // Додаємо повідомлення про успіх
+        // Додаємо повідомлення про успіх додавання
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "Успіх!", "Проєкт додано."));
     }
@@ -45,7 +45,7 @@ public class ProjectBean implements Serializable {
         // Оновлюємо список проектів
         projects = projectMetricDao.findAll();
 
-        // Додаємо повідомлення про успіх
+        // Додаємо повідомлення про успіх видалення
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "Успіх!", "Проєкт видалено."));
     }
